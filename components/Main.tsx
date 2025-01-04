@@ -14,7 +14,6 @@ import {
   startOfDay,
   endOfDay,
 } from 'date-fns';
-import Icon from 'react-native-vector-icons/Entypo'
 
 import { dataServiceKey } from '../configs/data.service';
 
@@ -32,6 +31,9 @@ import {
 
 import { styles } from '../styles/Calendar';
 
+import CalendarHeader from './CalendarHeader';
+import CalendarBody from './CalendarBody';
+
 
 export default function Main() {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,12 +43,12 @@ export default function Main() {
   const categoryList: CategoryData[] = useSelector(
     (state: RootState) => state.categoryReducer
   );
-   const scheduleList = useSelector((state: RootState) => state.scheduleReducer);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+  const scheduleList = useSelector((state: RootState) => state.scheduleReducer);
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectDay, setSelectDay] = useState<dayData | null>(null);
   const [addSchedule, setAddSchedule] = useState<string | null>(null);
   const [categoryOpen, setCategoryOpen] = useState<boolean>(false);
-  const date = ["일", "월", "화", "수", "목", "금", "토"];
+
   const [rows, setRows] = useState<dayData[][]>([]);
   const [holidayList, setHolidayList] = useState<
     calendarDateData[] | undefined
@@ -262,94 +264,9 @@ useEffect(() => {
         <SafeAreaView style={styles.wrap}>
           <View style={styles.container}> 
             {/* header */}
-            <View style={styles.headerWrap}>
-              <View style={styles.headerDate}>
-                <Text style={styles.headerYear}>
-                  {format(currentMonth, "yyyy")}
-                </Text>
-                <Text style={[styles.headerMonth, {color: userOptions.themeColor}]}>
-                  {format(currentMonth, "M")}月
-                </Text>
-              </View>
-              <View style={styles.headerButtons}>
-                <Text style={styles.headerButton}>
-                  <Icon name="plus" size={40} color={userOptions.themeColor} />
-                </Text>
-                <Text style={styles.headerButton}>
-                  <Icon name="dots-three-horizontal" size={40} color={userOptions.themeColor} />
-                </Text>
-              </View>
-            </View>
-            {/* header-end */}
+            <CalendarHeader currentMonth={currentMonth} />
             {/* calendar */}
-            {/* calendar-head */}
-            <View style={styles.calendarWrap}>
-              <View style={styles.calendarHead}>
-                {date.map((value, index) => {
-                  return (
-                    <View style={styles.calendarDate} key={`date-${value}`}>
-                      <Text 
-                        style={[styles.calendarDateText, 
-                        (index === 0) 
-                        ? styles.textRed 
-                        : (index === 6) 
-                        ? styles.textBlue 
-                        : styles.textBlack]}
-                      >
-                        {value}
-                        </Text>
-                    </View>
-                  )
-                })}
-              </View>
-              {/* calendar-head-end */}
-              {/* calendar-body */}
-              <View style={styles.calendarBody}>
-                {
-                  rows.map((days, index) => {
-                    return (
-                      <View style={styles.calendarDays} key={`rows-${index}`}>
-                        {
-                          days.map((day:dayData, i: number) => {
-                            const formattedDate = format(day.day, "d");
-                            return (
-                              <View style={[(i === 6) ? styles.noBorderDay : styles.calendarDay, (day.state === 'disabled' ? styles.disabled : '')]} key={`day-${day.formatDate}`}>
-                                <Text style={
-                                  [styles.calendarDayText,
-                                  (i === 0) 
-                                  ? styles.textRed 
-                                  : (day.holiday.isHoliday === 'Y')
-                                  ? styles.textRed
-                                  : (i === 6) 
-                                  ? styles.textBlue 
-                                  : (day.state === 'disabled')
-                                  ? styles.textGray
-                                  : styles.textBlack,
-                                  (day.state === 'selected' 
-                                    ? {
-                                      backgroundColor: userOptions.themeColor, 
-                                      color: '#fff',
-                                      borderRadius: 50,
-                                      width: 20,
-                                      height: 20,
-                                      textAlign: 'center',
-                                    } 
-                                    : '')
-                                  ]}
-                                  >
-                                    {formattedDate}
-                                  </Text>
-                              </View>
-                            )
-                          })
-                        }
-                      </View>
-                    )
-                  })
-                }
-              </View>
-              {/* calendar-body-end */}
-            </View>
+            <CalendarBody rows={rows} />
             {/* calendar-end */}
             <View style={styles.categoryWrap}>
 

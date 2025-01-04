@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     marginRight: 20,
   },
   
+  
   // calendar
   calendarWrap: {
     flex: 0.86,

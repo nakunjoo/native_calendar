@@ -9,8 +9,6 @@ export type OptionState = {
   bgColor: string;
   language: string;
   holiday: boolean;
-  anniversary: boolean;
-  exquisiteness: boolean;
   lunar: boolean;
   id: string;
 };
@@ -23,9 +21,7 @@ const initialState = {
     bgColor: "#c5e4f7",
     language: "Ko",
     holiday: true,
-    anniversary: false,
-    exquisiteness: false,
-    lunar: false,
+    lunar: true,
     id: "",
   } as OptionState,
 } as InitialState;

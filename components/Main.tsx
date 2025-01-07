@@ -43,8 +43,11 @@ export default function Main() {
   const categoryList: CategoryData[] = useSelector(
     (state: RootState) => state.categoryReducer
   );
+  const currentMonth: Date = useSelector(
+    (state: RootState) => state.monthReducer.currentMonth
+  );
   const scheduleList = useSelector((state: RootState) => state.scheduleReducer);
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  // const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectDay, setSelectDay] = useState<dayData | null>(null);
   const [addSchedule, setAddSchedule] = useState<string | null>(null);
   const [categoryOpen, setCategoryOpen] = useState<boolean>(false);
@@ -255,6 +258,7 @@ useEffect(() => {
     }
     setRows(rowArr);
   }, [
+    currentMonth,
     holidayList,
     lunarList,
     scheduleList,

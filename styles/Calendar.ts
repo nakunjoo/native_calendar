@@ -44,7 +44,8 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   headerMonth: {
-    fontSize: 25,
+    fontSize: 23,
+    marginTop: 3,
     marginLeft: 5,
     fontWeight: 'bold',
   },

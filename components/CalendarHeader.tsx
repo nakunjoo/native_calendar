@@ -7,7 +7,7 @@ import { styles } from '../styles/Calendar';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../store/index';
 
-import DatePicker from 'react-native-date-picker'
+import MonthPicker from './Modal/MonthPicker';
 
 export default function CalendarHeader({currentMonth}:{
     currentMonth: Date
@@ -40,20 +40,7 @@ export default function CalendarHeader({currentMonth}:{
                 </Text>
             </View>
             {/* Modal */}
-            <DatePicker
-                modal
-                mode={'date'}
-                open={isModalVisible}
-                date={date}
-                onConfirm={(date) => {
-                setIsModalVisible(false)
-                setDate(date)
-                }}
-                onCancel={() => {
-                setIsModalVisible(false)
-                }}
-                locale={'ko'}
-            />
+           <MonthPicker isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} />
         </View>
     )
 }
